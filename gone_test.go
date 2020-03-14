@@ -9,3 +9,10 @@ func TestGone(t *testing.T) {
 	}
 }
 
+func TestQuote(t *testing.T) {
+	want := "Hello, world."
+	if got := Quote(); got != want {
+		t.Errorf("Quote() = %q, want %q", got, want)
+	}
+}
+
