@@ -1,8 +1,7 @@
 package gone
 
 import (
-	"rsc.io/quote"
-	qouteV3 "rsc.io/quote/v3"
+	 "rsc.io/quote/v3"
 )
 
 func Gone() string {
@@ -10,11 +9,11 @@ func Gone() string {
 }
 
 func Quote() string  {
-	return quote.Hello()
+	return quote.HelloV3()
 }
 
 func Proverb() string {
-	return qouteV3.Concurrency()
+	return quote.Concurrency()
 }
 
 
