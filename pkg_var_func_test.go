@@ -12,7 +12,8 @@ const (
 	Small = Big >> 99
 )
 
-func TestEtc(t *testing.T) {
+func TestPkgVarFunc(t *testing.T) {
+	fmt.Println("Start of test related to package, var and function:")
 	fmt.Println("A random number:", rand.Intn(10))
 	fmt.Println("Sqrt of 7:", math.Sqrt(7))
 	fmt.Println("Pi:", math.Pi)
