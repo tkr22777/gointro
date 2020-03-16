@@ -6,6 +6,8 @@ import (
 	"testing"
 )
 
+/* more reading: https://blog.golang.org/defer-panic-and-recover */
+
 func TestFlowControl(t *testing.T) {
 	fmt.Println("Start of test related to flow control:")
 	fmt.Println( "Sum:", sum(10))
