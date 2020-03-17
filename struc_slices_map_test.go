@@ -6,8 +6,7 @@ import (
 )
 
 type Vertex struct {
-	X int
-	Y int
+	X, Y float64
 }
 
 func TestStructSlicesMap(t *testing.T) {

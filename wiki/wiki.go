@@ -4,10 +4,10 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"html/template"
 )
 
 type Page struct {
