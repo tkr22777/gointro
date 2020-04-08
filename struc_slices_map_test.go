@@ -5,10 +5,6 @@ import (
 	"testing"
 )
 
-type Vertex struct {
-	X, Y float64
-}
-
 func TestStructSlicesMap(t *testing.T) {
 	fmt.Println("Start of test related to struct, slices and map:")
 	fmt.Println(pointers())

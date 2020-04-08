@@ -48,15 +48,6 @@ func Scale(v *Vertex, f float64) Vertex {
 	return *v
 }
 
-type MyFloat float64
-
-func (f MyFloat) Abs() float64 {
-	if f < 0 {
-		return float64(-f)
-	}
-	return float64(f)
-}
-
 func Abs(v Vertex) float64 {
 	return math.Sqrt(v.X * v.X + v.Y * v.Y)
 }
