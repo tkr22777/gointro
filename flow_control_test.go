@@ -1,4 +1,4 @@
-package gone
+package simplepackage
 
 import (
 	"fmt"

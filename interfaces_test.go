@@ -7,7 +7,7 @@ import (
 )
 
 func TestAbsAssignment(t *testing.T) {
-	fmt.Println(assignment())
+	fmt.Println(variable_assignment())
 	IInterface()
 	fmt.Println(stringerInterface())
 }
@@ -20,33 +20,33 @@ func (v *Vertex) Abs() float64 {
 	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
 
-func assignment() float64 {
-	var a Abser
-	f := MyFloat(-math.Sqrt2)
-	v := Vertex{3, 4} //// a  implements Abser
-	a = f             // a MyFloat implements Abser
-	a = &v            //can assign Vertex pointer since it (implicitly) implements Abser
-	//a = v //cannot assign Vertex and does not implement Abser
+func variable_assignment() float64 {
+	var a Abser               // a implements Abser
+	f := MyFloat(-math.Sqrt2) // MyFloat implements Abser
+	v := Vertex{3, 4}         // Vertex (implicitly) implements Abser when it is pointer?
+	a = f                     // Can be assigned to a (Abser type) var
+	a = &v                    // can assign Vertex pointer since it, the pointer, implicitly implements Abser
+	//a = v 		  // but cannot assign Vertex and as it does not implement Abser
 	return a.Abs()
 }
 
-type I interface {
-	M()
+type Worker interface {
+	work()
 }
 
-type T struct {
-	S string
+type Engineer struct {
+	feild string
 }
 
 // This method means type T (implicitly) implements the interface I,
 // but we don't need to explicitly declare that it does so.
-func (t T) M() {
-	fmt.Println(t.S)
+func (e Engineer) work() {
+	fmt.Println("Wow wow wee wa! Imma open the dashboard first!")
 }
 
 func IInterface() {
-	var i I = T{"Hello"}
-	i.M()
+	var allDayWorker Worker = Engineer{"Software"}
+	allDayWorker.work()
 }
 
 type Person struct {

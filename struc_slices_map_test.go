@@ -1,4 +1,4 @@
-package gone
+package simplepackage
 
 import (
 	"fmt"
@@ -69,7 +69,7 @@ func slices() string {
 }
 
 func sliceRefers() string {
-	names := [4]string {
+	names := [4]string{
 		"John",
 		"Paul",
 		"George",
@@ -84,7 +84,7 @@ func sliceRefers() string {
 func sliceLiteral() string {
 	q := []int{2, 3, 5, 7, 11, 13}
 	r := []bool{true, false, true, true, false, true}
-	s := []struct{
+	s := []struct {
 		i int
 		b bool
 	}{
@@ -158,18 +158,14 @@ func rangeSkipInderOrValue() string {
 func mapBegins() string {
 	var m map[string]Vertex
 	m = make(map[string]Vertex)
-	m["Origin"] = Vertex{
-		0, 0,
-	}
+	m["Origin"] = Vertex{0, 0}
 	return fmt.Sprint(m["Origin"])
 }
 
 func mapLiterals() string {
 	var m = map[string]Vertex{
 		"Origin": {0, 0},
-		"Top": {0, 100},
+		"Top":    {0, 100},
 	}
 	return fmt.Sprint(m)
 }
-
-
