@@ -1,7 +1,7 @@
-package gone
+package simplepackage
 
 import (
-	 "rsc.io/quote/v3"
+	"rsc.io/quote/v3"
 )
 
 type Vertex struct {
@@ -17,11 +17,7 @@ func (f MyFloat) Abs() float64 {
 	return float64(f)
 }
 
-func Gone() string {
-	return "Hello, world!"
-}
-
-func Quote() string  {
+func Quote() string {
 	return quote.HelloV3()
 }
 
@@ -29,3 +25,6 @@ func Proverb() string {
 	return quote.Concurrency()
 }
 
+func Glassy() string {
+	return quote.GlassV3()
+}

@@ -1,4 +1,4 @@
-package gone
+package simplepackage
 
 import (
 	"fmt"
@@ -16,16 +16,16 @@ type Abser interface {
 	Abs() float64
 }
 
-func (v* Vertex) Abs() float64 {
-	return math.Sqrt(v.X * v.X + v.Y * v.Y)
+func (v *Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
 
 func assignment() float64 {
 	var a Abser
 	f := MyFloat(-math.Sqrt2)
 	v := Vertex{3, 4} //// a  implements Abser
-	a = f // a MyFloat implements Abser
-	a = &v //can assign Vertex pointer since it (implicitly) implements Abser
+	a = f             // a MyFloat implements Abser
+	a = &v            //can assign Vertex pointer since it (implicitly) implements Abser
 	//a = v //cannot assign Vertex and does not implement Abser
 	return a.Abs()
 }
@@ -51,7 +51,7 @@ func IInterface() {
 
 type Person struct {
 	Name string
-	Age int
+	Age  int
 }
 
 func (p Person) String() string {
@@ -62,4 +62,3 @@ func stringerInterface() string {
 	a := Person{"Zaphod Beeblebrox", 9001}
 	return fmt.Sprint(a)
 }
-

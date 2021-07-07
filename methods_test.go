@@ -1,4 +1,4 @@
-package gone
+package simplepackage
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestMethodsAndInterfaces(t *testing.T)  {
+func TestMethodsAndInterfaces(t *testing.T) {
 	v := Vertex{3, 4}
 	fmt.Println(v.AbsMethod())
 	fmt.Println(v.Scale(5))
@@ -20,7 +20,7 @@ func TestMethodsAndInterfaces(t *testing.T)  {
 
 /* A METHOD is just a function with a receiver argument */
 func (v Vertex) AbsMethod() float64 {
-	return math.Sqrt(v.X * v.X + v.Y * v.Y)
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
 
 /* a fluent METHOD with a pointer receiver */
@@ -49,7 +49,5 @@ func Scale(v *Vertex, f float64) Vertex {
 }
 
 func Abs(v Vertex) float64 {
-	return math.Sqrt(v.X * v.X + v.Y * v.Y)
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
-
-

@@ -1,4 +1,4 @@
-module github.com/stupefied/gone
+module github.com/stupefied/simplepackage
 
 go 1.14
 

@@ -1,4 +1,4 @@
-package gone
+package simplepackage
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	Big = 1 << 100
+	Big   = 1 << 100
 	Small = Big >> 99
 )
 
@@ -34,7 +34,7 @@ func add(x int, y int) int {
 	return x + y
 }
 
-func swap(first string, second string) (string, string)  {
+func swap(first string, second string) (string, string) {
 	return second, first
 }
 
@@ -68,7 +68,7 @@ func varTypes() string {
 	var firstName string = "Hey Jude!"
 	var integerDe64 int64 = -3412
 	var nonNegative uint64 = 12319
-	var unByte byte = 37 //uint8
+	var unByte byte = 37    //uint8
 	var unRune rune = 31239 //uint32 or an unicode
 	var fraction float64 = 93747.1319
 	return fmt.Sprint(isDead, firstName, integerDe64, nonNegative, unByte, unRune, fraction)
@@ -84,14 +84,14 @@ func zeroValues() string {
 
 func typeConversion() string {
 	var x, y int = 3, 4
-	var f float64 = math.Sqrt(float64(x * x + y * y))
+	var f float64 = math.Sqrt(float64(x*x + y*y))
 	var z uint = uint(f)
 	return fmt.Sprint(x, y, z)
 }
 
 func defaultTypeInference() string {
-	i := 294967292 // int32
-	f := 3.142 //
+	i := 294967292    // int32
+	f := 3.142        //
 	g := 0.867 + 0.5i //complex128
 	return fmt.Sprintf("294967292 is of type:%T, 3.142 is of type:%T and 0.867 + 0.5i is of type:%T", i, f, g)
 }
@@ -101,6 +101,3 @@ func constants() string {
 	const MORTAL = true
 	return fmt.Sprint(PI, MORTAL)
 }
-
-
-

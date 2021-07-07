@@ -1,4 +1,4 @@
-package gone
+package simplepackage
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestGoRoutines(t *testing.T)  {
+func TestGoRoutines(t *testing.T) {
 	sayFiveTimesGone()
 	goChannelSum()
 	bufferedChannel()
@@ -36,17 +36,17 @@ func summation(s []int, c chan int) {
 	c <- sum // send sum to c
 }
 
-func goChannelSum()  {
+func goChannelSum() {
 	s := []int{7, 2, 8, -9, 4, 0}
 	c := make(chan int)
 	go summation(s[:len(s)/2], c)
 	go summation(s[len(s)/2:], c)
 	x, y := <-c, <-c //receive from c
-	fmt.Println(x, y, x + y)
+	fmt.Println(x, y, x+y)
 }
 
 /* start of buffered channel */
-func bufferedChannel()  {
+func bufferedChannel() {
 	ch := make(chan int, 2)
 	ch <- 1
 	ch <- 2
@@ -55,11 +55,11 @@ func bufferedChannel()  {
 }
 
 /* start of buffered channel fibonacci */
-func fibbonacci(n int, c chan int)  {
+func fibbonacci(n int, c chan int) {
 	x, y := 0, 1
 	for i := 0; i < n; i++ {
 		c <- x
-		x, y = y, y + x
+		x, y = y, y+x
 	}
 	close(c)
 }
@@ -73,15 +73,15 @@ func channelledFibonacci() {
 }
 
 /* start of fibonacci with select */
-func fibonacciWithSelect(c, quit chan int)  {
+func fibonacciWithSelect(c, quit chan int) {
 	x, y := 0, 1
 	for {
 		select {
-			case c <- x:
-				x, y = y, x + y
-			case <- quit:
-				fmt.Println("quit")
-				return
+		case c <- x:
+			x, y = y, x+y
+		case <-quit:
+			fmt.Println("quit")
+			return
 		}
 	}
 }
@@ -97,6 +97,3 @@ func channelledFibonacciWithSelect() {
 	}()
 	fibonacciWithSelect(c, quit)
 }
-
-
-
