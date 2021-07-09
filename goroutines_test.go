@@ -3,6 +3,7 @@ package simplepackage
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"testing"
 	"time"
 
@@ -117,7 +118,7 @@ func channelledFibonacciWithSelect() {
 
 func TestErrGroup(t *testing.T) {
 	g, _ := errgroup.WithContext(context.TODO())
-	testArray := []int64{1, 2, 3, 4}
+	testArray := []int64{0, 1, 2, 3, 4, 5, 6, 7}
 	newArray := make([]int64, 0, len(testArray))
 	for _, val := range testArray {
 		newVal := val
@@ -131,4 +132,37 @@ func TestErrGroup(t *testing.T) {
 		fmt.Printf("some error")
 	}
 	fmt.Printf("success")
+}
+
+func TestErrGroupBatch(t *testing.T) {
+	g, _ := errgroup.WithContext(context.TODO())
+	nums := []int64{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	squaredNums := make([]int64, 0, len(nums))
+	//numsByNumString := make(map[int64]string, len(nums))
+	numsForRead := make(map[int64]string, len(nums))
+	batchSize := 3
+	smallBatch := make([]int64, 0, batchSize)
+	for _, val := range nums {
+		numsForRead[val] = strconv.Itoa(int(val))
+	}
+	for i, val := range nums {
+		smallBatch = append(smallBatch, val)
+		if (i+1)%batchSize == 0 || (i+1) == len(nums) {
+			procBatch := smallBatch
+			smallBatch = make([]int64, 0, batchSize)
+			g.Go(func() error {
+				for _, v := range procBatch {
+					//numsByNumString[v] = strconv.Itoa(int(v)) // would panic with concurrent write
+					squaredNums = append(squaredNums, v)
+					fmt.Printf("Map read: %s\n", numsForRead[v])
+				}
+				return fmt.Errorf("some error")
+			})
+		}
+
+	}
+	if err := g.Wait(); err != nil {
+		fmt.Printf("some error")
+	}
+	fmt.Println(squaredNums)
 }
