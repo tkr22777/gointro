@@ -1,9 +1,12 @@
 package simplepackage
 
 import (
+	"context"
 	"fmt"
 	"testing"
 	"time"
+
+	"golang.org/x/sync/errgroup"
 )
 
 func TestGoRoutines(t *testing.T) {
@@ -110,4 +113,22 @@ func channelledFibonacciWithSelect() {
 	}()
 	fibonacciWithSelect(c, quit)
 	fmt.Println("done!")
+}
+
+func TestErrGroup(t *testing.T) {
+	g, _ := errgroup.WithContext(context.TODO())
+	testArray := []int64{1, 2, 3, 4}
+	newArray := make([]int64, 0, len(testArray))
+	for _, val := range testArray {
+		newVal := val
+		g.Go(func() error {
+			newArray = append(newArray, newVal)
+			fmt.Println(newArray)
+			return nil
+		})
+	}
+	if err := g.Wait(); err != nil {
+		fmt.Printf("some error")
+	}
+	fmt.Printf("success")
 }
