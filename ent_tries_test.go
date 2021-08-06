@@ -24,7 +24,7 @@ func TestEnt(t *testing.T) {
 		log.Fatalf("failed creating schema resources: %v", err)
 	}
 
-	createdUser, err := CreateUser(context.TODO(), client, "test-user", 76)
+	createdUser, err := CreateUser(context.TODO(), client, &ent.User{Name: "test-user", Age: 76})
 	if err != nil {
 		log.Fatalf("failed creating user: %v", err)
 	}
@@ -50,39 +50,42 @@ func TestEntSearch(t *testing.T) {
 		log.Fatalf("failed creating schema resources: %v", err)
 	}
 
-	names := []string{
-		"John",
-		"Tahsin",
-		"Ringo",
-		"Paul",
-		"Anita",
-		"George",
-		"Chiesa",
-		"Gregor",
-		"Manchini",
-		"Stephenie",
+	data := [][]string{
+		{"John", "innovate@gmail.com", ""},
+		{"Tahsin", "tkr@gmail.com", ""},
+		{"Rohn", "sans@hotmail.com", ""},
+		{"Mohsin", "mohn@yahoo.com", ""},
+		{"Ahsan", "dohn@hotmail.com", ""},
 	}
 
-	for i := 0; i < len(names); i++ {
-		createdUser, err := CreateUser(context.TODO(), client, names[i], i+1)
+	for i := 0; i < len(data); i++ {
+		createdUser, err := CreateUser(context.TODO(), client,
+			&ent.User{
+				Age:     i + 1,
+				Name:    data[i][0],
+				Email:   data[i][1],
+				Address: data[i][2],
+			},
+		)
 		if err != nil {
 			log.Fatalf("failed creating user: %v", err)
 		}
 		fmt.Println("User created:", createdUser.String())
 	}
 
-	users, _ := SearchUser(context.TODO(), client, "in")
+	users, _ := SearchUserByName(context.TODO(), client, "in")
 	for i := 0; i < len(users); i++ {
 		fmt.Println("User found:", users[i].String())
 	}
-
 }
 
-func CreateUser(ctx context.Context, client *ent.Client, name string, age int) (*ent.User, error) {
+func CreateUser(ctx context.Context, client *ent.Client, u *ent.User) (*ent.User, error) {
 	u, err := client.User.
 		Create().
-		SetAge(age).
-		SetName(name).
+		SetAge(u.Age).
+		SetName(u.Name).
+		SetEmail(u.Email).
+		SetAddress(u.Address).
 		Save(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed creating user: %w", err)
@@ -98,8 +101,27 @@ func GetUser(ctx context.Context, client *ent.Client, id int) (*ent.User, error)
 	return user, nil
 }
 
-func SearchUser(ctx context.Context, client *ent.Client, searchTerm string) ([]*ent.User, error) {
+func SearchUserByName(ctx context.Context, client *ent.Client, searchTerm string) ([]*ent.User, error) {
 	users, err := client.User.Query().Where(user.NameContains(searchTerm)).All(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("failed to retrive user: %w", err)
+	}
+	return users, nil
+}
+
+func SearchUserByTemp(t *testing.T) {
+	fmt.Printf(user.AddressHasPrefix("blaj").String())
+}
+
+func SearchUserByNameOrEmail(ctx context.Context, client *ent.Client, searchTerm string) ([]*ent.User, error) {
+	users, err := client.User.Query().
+		Where(
+			predicate.User(func(s *sql.Selector) {
+				s.Where(
+				),
+			}),
+		).
+		All(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to retrive user: %w", err)
 	}

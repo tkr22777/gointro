@@ -137,14 +137,15 @@ func TestErrGroup(t *testing.T) {
 func TestErrGroupBatch(t *testing.T) {
 	g, _ := errgroup.WithContext(context.TODO())
 	nums := []int64{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-	squaredNums := make([]int64, 0, len(nums))
 	//numsByNumString := make(map[int64]string, len(nums))
 	numsForRead := make(map[int64]string, len(nums))
-	batchSize := 3
-	smallBatch := make([]int64, 0, batchSize)
 	for _, val := range nums {
 		numsForRead[val] = strconv.Itoa(int(val))
 	}
+
+	squaredNums := make([]int64, 0, len(nums))
+	batchSize := 3
+	smallBatch := make([]int64, 0, batchSize)
 	for i, val := range nums {
 		smallBatch = append(smallBatch, val)
 		if (i+1)%batchSize == 0 || (i+1) == len(nums) {
@@ -153,16 +154,16 @@ func TestErrGroupBatch(t *testing.T) {
 			g.Go(func() error {
 				for _, v := range procBatch {
 					//numsByNumString[v] = strconv.Itoa(int(v)) // would panic with concurrent write
-					squaredNums = append(squaredNums, v)
+					squaredNums = append(squaredNums, v*v)
 					fmt.Printf("Map read: %s\n", numsForRead[v])
 				}
-				return fmt.Errorf("some error")
+				return nil
 			})
 		}
 
 	}
 	if err := g.Wait(); err != nil {
-		fmt.Printf("some error")
+		fmt.Println("some error: " + err.Error())
 	}
 	fmt.Println(squaredNums)
 }
