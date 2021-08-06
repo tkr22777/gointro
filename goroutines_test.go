@@ -162,8 +162,10 @@ func TestErrGroupBatch(t *testing.T) {
 		}
 
 	}
+	fmt.Println("print me before!")
 	if err := g.Wait(); err != nil {
 		fmt.Println("some error: " + err.Error())
 	}
+	fmt.Println("print me after!")
 	fmt.Println(squaredNums)
 }
