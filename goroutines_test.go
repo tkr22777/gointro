@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"sync"
 	"testing"
 	"time"
 
@@ -146,17 +147,21 @@ func TestErrGroupBatch(t *testing.T) {
 	squaredNums := make([]int64, 0, len(nums))
 	batchSize := 3
 	smallBatch := make([]int64, 0, batchSize)
+	var mu sync.Mutex
 	for i, val := range nums {
 		smallBatch = append(smallBatch, val)
 		if (i+1)%batchSize == 0 || (i+1) == len(nums) {
 			procBatch := smallBatch
 			smallBatch = make([]int64, 0, batchSize)
 			g.Go(func() error {
+				mu.Lock()
+				fmt.Println(procBatch)
 				for _, v := range procBatch {
 					//numsByNumString[v] = strconv.Itoa(int(v)) // would panic with concurrent write
 					squaredNums = append(squaredNums, v*v)
 					fmt.Printf("Map read: %s\n", numsForRead[v])
 				}
+				mu.Unlock()
 				return nil
 			})
 		}
